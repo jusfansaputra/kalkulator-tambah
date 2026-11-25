@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penjumlahan Dua Angka</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 16px;
+    }
+
+    .card {
+      background: #fff;
+      width: 100%;
+      max-width: 380px;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      color: #2d2d44;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: #667eea;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover { background: #5a6fd6; }
+    button:active { transform: scale(0.98); }
+
+    .result {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f2f4ff;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #2d2d44;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .result strong { color: #667eea; font-size: 1.3rem; }
+    .error { color: #d32f2f; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Penjumlahan Dua Angka</h1>
+
+    <label for="angka1">Angka pertama</label>
+    <input type="number" id="angka1" placeholder="Masukkan angka pertama" step="any">
+
+    <label for="angka2">Angka kedua</label>
+    <input type="number" id="angka2" placeholder="Masukkan angka kedua" step="any">
+
+    <button id="btnTambah">Tambah</button>
+
+    <div class="result" id="hasil">Hasil akan muncul di sini</div>
+  </div>
+
+  <script>
+    const input1 = document.getElementById("angka1");
+    const input2 = document.getElementById("angka2");
+    const hasil = document.getElementById("hasil");
+
+    function hitung() {
+      const a = input1.value.trim();
+      const b = input2.value.trim();
+
+      if (a === "" || b === "") {
+        hasil.innerHTML = '<span class="error">Harap isi kedua angka terlebih dahulu.</span>';
+        return;
+      }
+
+      const num1 = Number(a);
+      const num2 = Number(b);
+
+      if (!Number.isFinite(num1) || !Number.isFinite(num2)) {
+        hasil.innerHTML = '<span class="error">Input tidak valid.</span>';
+        return;
+      }
+
+      // membulatkan untuk menghindari galat floating point (0.1 + 0.2)
+      const total = Math.round((num1 + num2) * 1e12) / 1e12;
+      hasil.innerHTML = `${num1} + ${num2} = <strong>${total}</strong>`;
+    }
+
+    document.getElementById("btnTambah").addEventListener("click", hitung);
+
+    [input1, input2].forEach((input) => {
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") hitung();
+      });
+    });
+  </script>
+</body>
+</html>
